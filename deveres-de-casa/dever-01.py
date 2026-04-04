@@ -2,6 +2,13 @@ import random
 import time
 
 def insertion_sort(lista):
+"""
+funcao que ordena uma lista usando insertion sort
+
+funcionamento:
+percorre a lista e vai colocando cada elemento
+na posicao correta comparando com os anteriores
+"""
     for i in range(1, len(lista)):
         chave = lista[i]
         j = i - 1
@@ -14,8 +21,18 @@ def insertion_sort(lista):
 
     return lista
 
+# lista de tamanhos que vamos testar
 tamanhos = [1000, 5000, 10000, 20000, 50000]
 
+"""
+parte principal
+
+aqui vamos:
+- gerar listas aleatorias
+- ordenar com insertion sort
+- ordenar com sorted()
+- comparar o tempo dos dois
+"""
 for n in tamanhos:
     lista = [random.randint(0, 100000) for _ in range(n)]
 
