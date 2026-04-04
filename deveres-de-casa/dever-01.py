@@ -1,62 +1,37 @@
-
-"""
-calculo de fatorial utilizando recursao e medicao de tempo de execucao
-
-autor: João Victor Santiago
-"""
-
+import random
 import time
 
-def calcular_fatorial(n: int) -> int:
-    """
-    calcula o fatorial de um numero inteiro n utilizando recursao
+def insertion_sort(lista):
+    for i in range(1, len(lista)):
+        chave = lista[i]
+        j = i - 1
 
-    :param n: numero inteiro nao negativo
-    :return: fatorial de n
-    """
-    # caso base: fatorial de 0 e 1
-    if n == 0:
-        return 1
+        while j >= 0 and lista[j] > chave:
+            lista[j + 1] = lista[j]
+            j -= 1
 
-    # caso recursivo: n * fatorial(n-1)
-    return n * calcular_fatorial(n - 1)
+        lista[j + 1] = chave
 
+    return lista
 
-def medir_tempo_execucao(n: int) -> float:
-    """
-    mede o tempo de execucao da funcao de fatorial com maior precisao
-    """
-    inicio = time.perf_counter()
+tamanhos = [1000, 5000, 10000, 20000, 50000]
 
-    calcular_fatorial(n)
+for n in tamanhos:
+    lista = [random.randint(0, 100000) for _ in range(n)]
 
-    fim = time.perf_counter()
+    lista_insertion = lista.copy()
+    inicio = time.time()
+    insertion_sort(lista_insertion)
+    fim = time.time()
+    tempo_insertion = fim - inicio
 
-    return fim - inicio
+    lista_sorted = lista.copy()
+    inicio = time.time()
+    sorted(lista_sorted)
+    fim = time.time()
+    tempo_sorted = fim - inicio
 
-
-def main():
-    """
-    funcao principal do programa
-    """
-    # entrada do usuario
-    numero = int(input("Digite um numero inteiro: "))
-
-    resultado = calcular_fatorial(numero)
-
-    print(f"Fatorial de {numero} = {resultado}")
-
-    # testes de desempenho
-    valores_teste = [10, 100, 500, 1000]
-
-    print("\ntempo de execucao:")
-    for valor in valores_teste:
-        try:
-            tempo = medir_tempo_execucao(valor)
-            print(f"n = {valor} -> tempo = {tempo:.6f} segundos")
-        except RecursionError:
-            print(f"n = {valor} -> erro: limite de recursao atingido")
-
-
-if __name__ == "__main__":
-    main()
+    print()
+    print(f"Insertion Sort: {tempo_insertion:.6f} segundos")
+    print(f"sorted(): {tempo_sorted:.6f} segundos")
+    print()
